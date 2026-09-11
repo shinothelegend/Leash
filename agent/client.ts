@@ -25,12 +25,21 @@ async function main() {
   const fetchWithPayment = wrapFetchWithPayment(fetch, client);
   const httpClient = new x402HTTPClient(client);
 
+  const isSmall = process.argv.includes("--small");
+  const amountUsd = isSmall ? 0.01 : (process.env.AMOUNT_USD ? parseFloat(process.env.AMOUNT_USD) : 1.00);
+
   const vendor = process.env.VENDOR_ACCOUNT_ID || "0.0.99999";
-  const decision = await checkPolicyLocally({ vendor, amountUsd: 0.01 });
+  const decision = await checkPolicyLocally({ vendor, amountUsd });
   if (decision === "reject") {
     console.log("❌ Blocked locally by policy — not even attempting payment.");
     return;
   }
+  if (decision === "escalate") {
+    console.log(`⚠️ Payment of $${amountUsd.toFixed(2)} exceeds policy per-tx cap. Escalated and held for Ledger approval.`);
+    return;
+  }
+
+  console.log(`✅ Policy check passed for $${amountUsd.toFixed(2)}. Sending x402 payment...`);
 
   const response = await fetchWithPayment("http://localhost:4021/infer", { method: "GET" });
   console.log("Status:", response.status, response.statusText);
