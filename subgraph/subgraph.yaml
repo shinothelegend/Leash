@@ -1,0 +1,33 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PolicyVault
+    network: hedera-testnet
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: PolicyVault
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Vendor
+        - PaymentEvent
+      abis:
+        - name: PolicyVault
+          file: ../artifacts/contracts/PolicyVault.sol/PolicyVault.json
+      eventHandlers:
+        - event: PaymentApproved(indexed uint256,indexed address,uint256,uint256,string)
+          handler: handlePaymentApproved
+        - event: PaymentEscalated(indexed uint256,indexed address,uint256,uint256,string,string)
+          handler: handlePaymentEscalated
+        - event: PaymentRejected(indexed uint256,indexed address,string)
+          handler: handlePaymentRejected
+        - event: PaymentReleased(indexed uint256,indexed address,uint256)
+          handler: handlePaymentReleased
+      file: ./src/mapping.ts

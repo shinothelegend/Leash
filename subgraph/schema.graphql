@@ -1,0 +1,18 @@
+type Vendor @entity(immutable: false) {
+  id: ID!                 # vendor address
+  approvedCount: Int!
+  escalatedCount: Int!
+  rejectedCount: Int!
+  totalReleasedWei: BigInt!
+  reputationScore: Int!   # approvedCount - (escalatedCount*2) - (rejectedCount*3), floor 0
+}
+
+type PaymentEvent @entity(immutable: true) {
+  id: ID!                 # tx hash + log index
+  paymentId: BigInt!
+  vendor: Vendor!
+  amountWei: BigInt!
+  amountUsdCents: BigInt!
+  status: String!
+  timestamp: BigInt!
+}
