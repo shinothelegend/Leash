@@ -17,6 +17,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        ink: "#041B2D",
+        "blue-deep": "#004E9A",
+        "blue-bright": "#428CD4",
+        "pink-soft": "#FF9CDA",
+        "pink-hot": "#EA4492",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -83,31 +88,31 @@ module.exports = {
         // dark mode for tremor
         "dark-tremor": {
           brand: {
-            faint: "#0B1229", // custom
-            muted: "#172554", // blue-950
-            subtle: "#1e40af", // blue-800
-            DEFAULT: "#3b82f6", // blue-500
-            emphasis: "#60a5fa", // blue-400
-            inverted: "#030712", // gray-950
+            faint: "#004E9A",
+            muted: "#004E9A",
+            subtle: "#428CD4",
+            DEFAULT: "#EA4492",
+            emphasis: "#FF9CDA",
+            inverted: "#041B2D",
           },
           background: {
-            muted: "#0A0A0F", // custom bg
-            subtle: "#18181b", // zinc-900
-            DEFAULT: "#0A0A0F", // zinc-950/near-black
-            emphasis: "#27272a", // zinc-800
+            muted: "#0A2740",
+            subtle: "#0D2E4A",
+            DEFAULT: "#041B2D",
+            emphasis: "#133D62",
           },
           border: {
-            DEFAULT: "#27272a", // zinc-800
+            DEFAULT: "#428CD4",
           },
           ring: {
-            DEFAULT: "#27272a", // zinc-800
+            DEFAULT: "#EA4492",
           },
           content: {
-            subtle: "#3f3f46", // zinc-700
-            DEFAULT: "#a1a1aa", // zinc-400
-            emphasis: "#e4e4e7", // zinc-200
-            strong: "#f4f4f5", // zinc-100
-            inverted: "#000000", // black
+            subtle: "#428CD4",
+            DEFAULT: "#EAF1F8",
+            emphasis: "#FFFFFF",
+            strong: "#FFFFFF",
+            inverted: "#041B2D",
           },
         },
       },
@@ -127,6 +132,11 @@ module.exports = {
         "dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         "dark-tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
         "dark-tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+        display: ["var(--font-heading-display)", "sans-serif"],
       },
       fontSize: {
         "tremor-label": ["0.75rem", { lineHeight: "1rem" }],

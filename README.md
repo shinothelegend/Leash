@@ -1,53 +1,80 @@
-# Leash — Autonomous Hardware-Verified Spending Firewall
+<div align="center">
 
-**Leash** is a next-generation autonomous AI spending firewall built on the Hedera network, utilizing the x402 protocol, Chainlink Data Feeds, and the Ledger Device Management Kit (DMK). 
+<h1>Leash</h1>
 
-This project was built entirely autonomously as a demonstration for ETHGlobal ETHOnline 2026.
+**An Autonomous Hardware-Verified Spending Firewall.**
+A next-generation firewall built on the **Hedera network**, utilizing the **[x402](https://x402.org)** protocol, **Chainlink Data Feeds**, and the **Ledger** Device Management Kit (DMK). Built for **ETHGlobal ETHOnline 2026**.
 
-## Live Demo & Proof of Work
-- **Contract Address (Hedera Testnet):** `0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC` 
-  - [View on HashScan](https://hashscan.io/testnet/contract/0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC)
-- **Real x402 Settlement TX Hash:** `0.0.7162784@1789114603.955176995`
+[![x402](https://img.shields.io/badge/x402-v2-7C5CFF?style=flat-square)](https://x402.org)
+[![Hedera](https://img.shields.io/badge/Hedera-testnet-3DDCFF?style=flat-square)](https://hashscan.io/testnet)
+[![License](https://img.shields.io/badge/license-MIT-50F0C8?style=flat-square)](LICENSE)
 
-## Architecture & Current Limitations
+</div>
 
-Leash is composed of four main pillars, with the following demo-specific constraints:
+<div align="center">
 
-1. **Smart Contracts (Solidity & Hardhat)**
-   - `PolicyVault.sol`: A smart contract that holds funds and enforces spending policies.
-   - **Limitation (Chainlink Price Feed):** Chainlink does not publish an on-chain HBAR/USD Data Feed on Hedera **testnet** (only Data Streams, plus Data Feeds on Hedera mainnet). Since Leash is deployed on Hedera testnet, PolicyVault reads a `MockV3Aggregator` seeded with a realistic HBAR/USD price. The USD-pegged cap logic is identical to production — only the price source is mocked. 
+**[Dashboard Placeholder]** · **[Contract](https://hashscan.io/testnet/contract/0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC)**
 
-2. **Autonomous Agent (Agent Kit & Langchain)**
-   - Agent logic built with `@hashgraph/hedera-agent-kit`.
-   - **Limitation (Agent Loop):** The Agent Kit toolkit is initialized but the autonomous agent loop is minimal for this demo.
+**▶ [Watch the trailer](videos/leash-launch/renders/video.mp4)** — 60 seconds
 
-3. **Reputation Oracle (The Graph)**
-   - **Limitation (Subgraph Deployment):** The subgraph `schema.graphql` and `mapping.ts` are fully written but could not be deployed to Subgraph Studio due to missing deployment keys in the environment. The UI `/reputation` page uses an **on-chain fallback calculation** reading directly from the `PolicyVault` contract to calculate real reputation scores instead of querying a deployed subgraph.
+</div>
 
-4. **Web Dashboard & Hardware Escalation (Next.js & Ledger DMK)**
-   - A modern React dashboard built with Next.js, displaying live pending escalations and policies directly from the Hedera testnet contract via `wagmi`.
-   - **Limitation (Ledger Hardware Signing):** The `@ledgerhq/device-management-kit` integration is fully scaffolded in `web/src/lib/ledger.ts`, but since we lack a physical Ledger device for the demo, the "Approve & Release" flow in the UI simply writes to the smart contract via your connected browser wallet.
+---
+
+## For judges — verify in three commands
+
+```bash
+npm install && npm run build && npm test
+```
+
+Then the live proof, all on Hedera testnet and all openly readable:
+
+| What | Where |
+|---|---|
+| The `PolicyVault` Smart Contract | [`0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC`](https://hashscan.io/testnet/contract/0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC) |
+| A real x402 Settlement | [`0.0.7162784@1789114603.955176995`](https://hashscan.io/testnet/transaction/0.0.7162784-1789114603-955176995) |
+
+### What is proven, and what isn't
+
+| | |
+|---|---|
+| ✅ **Hedera Smart Contracts** | `PolicyVault.sol` holds funds and enforces spending policies on testnet. |
+| ✅ **x402 Settlement** | A real x402 settlement transaction hash is provided. |
+| ✅ **Web Dashboard** | A modern Next.js React dashboard using `wagmi` to read live pending escalations and policies directly from the contract. |
+| ✅ **Agent Logic Initialization** | Built with `@hashgraph/hedera-agent-kit`. |
+| 🚧 **Chainlink Price Feed** | Chainlink doesn't publish HBAR/USD on Hedera testnet. We use a `MockV3Aggregator` with identical pegging logic to production. |
+| 🚧 **Reputation Oracle (The Graph)** | Subgraph written but not deployed due to missing keys. UI uses an on-chain fallback calculation reading directly from the contract. |
+| 🚧 **Ledger Hardware Signing** | `@ledgerhq/device-management-kit` is fully scaffolded, but due to lack of a physical device, the "Approve & Release" flow writes to the contract via a browser wallet. |
+| 🚧 **Autonomous Agent Loop** | Toolkit is initialized but the autonomous loop is minimal for the demo. |
+
+---
+
+## The trailer
+
+**[videos/leash-launch/renders/video.mp4](videos/leash-launch/renders/video.mp4)** — A brief overview of Leash in action.
+
+---
 
 ## Setup Instructions
 
-1. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+**1. Install Dependencies**
+```bash
+npm install
+```
 
-2. **Configure Environment**
-   Copy `.env.example` to `.env` and fill in your details:
-   - Hedera Testnet Account ID and Private Key (from [Hedera Portal](https://portal.hedera.com))
-   - Chainlink HBAR/USD Feed address (Testnet)
-   - OpenAI API Key
+**2. Configure Environment**
+Copy `.env.example` to `.env` and fill in your details:
+- Hedera Testnet Account ID and Private Key (from [Hedera Portal](https://portal.hedera.com))
+- Chainlink HBAR/USD Feed address (Testnet)
+- OpenAI API Key
 
-3. **Run Dashboard**
-   ```bash
-   cd web
-   npm run dev
-   ```
+**3. Run Dashboard**
+```bash
+cd web
+npm run dev
+```
 
-4. **Run Agent**
-   ```bash
-   npm run agent
-   ```
+**4. Run Agent**
+```bash
+npm run agent
+```
