@@ -108,14 +108,14 @@ export default function ApprovalsPage() {
     navigator.clipboard.writeText(text);
   };
 
-  const cardStyle = "bg-[#0A2740] border-[#428CD4]/20 ring-0 shadow-[0_12px_40px_-10px_rgba(0,78,154,0.4)]";
+  const cardStyle = "card";
 
   return (
     <AntiGravityContainer className="space-y-8 max-w-7xl mx-auto pb-10">
       <AntiGravity delay={0}>
         <div>
-          <h2 className="text-3xl font-display font-bold tracking-tight text-[#EAF1F8]">Pending Approvals</h2>
-          <p className="text-[#428CD4]/70 text-sm mt-1">Review and release escalated payments (Demo: releases via connected wallet instead of Ledger DMK).</p>
+          <h2 className="text-3xl font-display font-bold tracking-tight text-ink-900">Pending Approvals</h2>
+          <p className="text-ink-600 text-sm mt-1">Review and release escalated payments (Demo: releases via connected wallet instead of Ledger DMK).</p>
         </div>
       </AntiGravity>
 
@@ -123,7 +123,7 @@ export default function ApprovalsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <AntiGravity delay={0.1}>
           <Card className={cardStyle}>
-            <Text className="text-[#428CD4]">Approval Status</Text>
+            <Text className="text-ink-600 font-semibold uppercase tracking-wider text-xs">Approval Status</Text>
             <div className="flex items-center justify-between mt-4">
               {donutData.length > 0 ? (
                 <DonutChart
@@ -131,17 +131,17 @@ export default function ApprovalsPage() {
                   data={donutData}
                   category="value"
                   index="name"
-                  colors={["brand", "blue", "red"]}
+                  colors={["amber", "emerald", "red"]}
                   showLabel={false}
                   showAnimation={true}
                 />
               ) : (
-                <div className="w-24 h-24 flex items-center justify-center text-[#428CD4]/50 text-sm">No data</div>
+                <div className="w-24 h-24 flex items-center justify-center text-ink-400 text-sm">No data</div>
               )}
               <div className="space-y-2">
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#EA4492]"></div><span className="text-sm text-[#EAF1F8]">{pendingRequests.length} Pending</span></div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#428CD4]"></div><span className="text-sm text-[#EAF1F8]">{approvedCount} Approved</span></div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-red-500"></div><span className="text-sm text-[#EAF1F8]">{rejectedCount} Rejected</span></div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-amber-500"></div><span className="text-sm text-ink-900 font-medium">{pendingRequests.length} Pending</span></div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-emerald-500"></div><span className="text-sm text-ink-900 font-medium">{approvedCount} Approved</span></div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-red-500"></div><span className="text-sm text-ink-900 font-medium">{rejectedCount} Rejected</span></div>
               </div>
             </div>
           </Card>
@@ -149,20 +149,20 @@ export default function ApprovalsPage() {
 
         <AntiGravity delay={0.2}>
           <Card className={cardStyle}>
-            <Text className="text-[#428CD4]">Pending Value</Text>
-            <Metric className="text-[#EA4492] font-mono mt-2 drop-shadow-[0_0_10px_rgba(234,68,146,0.5)]">${pendingValue.toFixed(2)}</Metric>
-            <Text className="text-[#428CD4]/70 text-sm mt-4">Total USD value of {pendingRequests.length} escalated payment(s).</Text>
+            <Text className="text-ink-600 font-semibold uppercase tracking-wider text-xs">Pending Value</Text>
+            <Metric className="text-pink-hot font-display mt-2">${pendingValue.toFixed(2)}</Metric>
+            <Text className="text-ink-600 text-sm mt-4">Total USD value of {pendingRequests.length} escalated payment(s).</Text>
           </Card>
         </AntiGravity>
 
         <AntiGravity delay={0.3}>
           <Card className={cardStyle}>
-            <Text className="text-[#428CD4]">This Session</Text>
+            <Text className="text-ink-600 font-semibold uppercase tracking-wider text-xs">This Session</Text>
             <div className="flex justify-between items-end mt-2">
-              <Metric className="text-[#EAF1F8] font-mono">${spentUsd.toFixed(2)}</Metric>
-              <Text className="text-[#428CD4]/70 text-sm font-mono mb-1">/ ${capUsd.toFixed(2)}</Text>
+              <Metric className="text-ink-900 font-display">${spentUsd.toFixed(2)}</Metric>
+              <Text className="text-ink-600 text-sm font-mono mb-1">/ ${capUsd.toFixed(2)}</Text>
             </div>
-            <ProgressBar value={capUsd > 0 ? (spentUsd / capUsd) * 100 : 0} color="brand" className="mt-4 opacity-80" />
+            <ProgressBar value={capUsd > 0 ? (spentUsd / capUsd) * 100 : 0} color="blue" className="mt-4 opacity-80" />
           </Card>
         </AntiGravity>
       </div>
@@ -171,57 +171,54 @@ export default function ApprovalsPage() {
       <div className="mt-8">
         {pendingRequests.length === 0 ? (
           <AntiGravity delay={0.4}>
-            <Card className="bg-[#041B2D]/40 border border-[#428CD4]/30 border-dashed ring-0 py-16 flex flex-col items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-[#428CD4]/10 flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(66,140,212,0.2)]">
-                <CheckCircle2 className="w-8 h-8 text-[#428CD4]" />
+            <Card className="bg-slate-50/50 border border-border border-dashed ring-0 py-16 flex flex-col items-center justify-center shadow-none">
+              <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+                <CheckCircle2 className="w-8 h-8 text-blue-bright" />
               </div>
-              <h3 className="text-lg font-display tracking-tight text-[#EAF1F8]">All clear</h3>
-              <p className="text-[#428CD4]/70">No payments awaiting approval.</p>
+              <h3 className="text-lg font-display font-bold tracking-tight text-ink-900">All clear</h3>
+              <p className="text-ink-600">No payments awaiting approval.</p>
             </Card>
           </AntiGravity>
         ) : (
           <AntiGravityContainer className="space-y-6">
             {pendingRequests.map(req => req && (
               <AntiGravity key={req.id}>
-                <Card className="bg-[#0A2740] border-[#428CD4]/20 ring-0 shadow-[0_8px_30px_rgba(0,0,0,0.4)] relative overflow-hidden group hover:shadow-[0_0_20px_rgba(234,68,146,0.15)] hover:border-[#EA4492]/30 hover:-translate-y-[2px] transition-all duration-300">
-                  {/* Glow effect on top edge */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-[var(--grad-pink)] opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                  
+                <Card className="card relative overflow-hidden group hover:shadow-soft-hover hover:-translate-y-[2px] transition-all duration-300">
                   <div className="flex flex-col md:flex-row justify-between gap-6 p-2">
                     {/* Left info */}
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-3">
-                        <Badge className="bg-[#EA4492]/10 text-[#EA4492] hover:bg-[#EA4492]/20 border-[#EA4492]/20 px-3 py-1 text-sm font-medium uppercase tracking-wider font-display">
+                        <Badge className="bg-amber-50 text-amber-600 border-amber-200 px-3 py-1 text-sm font-medium uppercase tracking-wider font-display shadow-none">
                           {req.reason}
                         </Badge>
-                        <span className="text-[#428CD4]/70 text-sm">{new Date(req.timestamp).toLocaleString()}</span>
+                        <span className="text-ink-600 text-sm">{new Date(req.timestamp).toLocaleString()}</span>
                       </div>
                       
                       <div>
-                        <Text className="text-[#428CD4] mb-1">Vendor Address</Text>
+                        <Text className="text-ink-600 mb-1 font-semibold uppercase tracking-wider text-xs">Vendor Address</Text>
                         <div className="flex items-center gap-2">
-                          <p className="font-mono text-[#EAF1F8] text-sm bg-[#041B2D] px-2 py-1 rounded border border-[#428CD4]/10">{req.vendor}</p>
-                          <button onClick={() => copyToClipboard(req.vendor)} className="p-1.5 rounded bg-[#041B2D] border border-[#428CD4]/10 hover:border-[#428CD4]/50 text-[#428CD4] transition-colors"><Copy className="w-3.5 h-3.5" /></button>
+                          <p className="font-mono text-ink-900 text-sm bg-slate-50 px-2 py-1 rounded border border-border">{req.vendor}</p>
+                          <button onClick={() => copyToClipboard(req.vendor)} className="p-1.5 rounded bg-slate-50 border border-border hover:border-blue-bright text-ink-600 transition-colors"><Copy className="w-3.5 h-3.5" /></button>
                         </div>
                       </div>
 
                       <div className="max-w-xs pt-2">
                         <Flex className="mb-2">
-                          <Text className="text-[#428CD4]/70 text-xs">Impact on daily cap</Text>
-                          <Text className="text-[#EA4492] font-mono text-xs">+{capUsd > 0 ? ((req.amountUsdRaw / capUsd) * 100).toFixed(1) : 0}%</Text>
+                          <Text className="text-ink-600 text-xs font-semibold uppercase tracking-wider">Impact on daily cap</Text>
+                          <Text className="text-pink-hot font-mono text-xs font-bold">+{capUsd > 0 ? ((req.amountUsdRaw / capUsd) * 100).toFixed(1) : 0}%</Text>
                         </Flex>
-                        <ProgressBar value={capUsd > 0 ? (req.amountUsdRaw / capUsd) * 100 : 0} color="brand" />
+                        <ProgressBar value={capUsd > 0 ? (req.amountUsdRaw / capUsd) * 100 : 0} color="blue" />
                       </div>
                     </div>
                     
                     {/* Right actions */}
-                    <div className="flex flex-col items-start md:items-end justify-between border-t md:border-t-0 md:border-l border-[#428CD4]/20 pt-6 md:pt-0 md:pl-6 min-w-[240px]">
+                    <div className="flex flex-col items-start md:items-end justify-between border-t md:border-t-0 md:border-l border-border pt-6 md:pt-0 md:pl-6 min-w-[240px]">
                       <div className="mb-6 md:text-right">
-                        <Text className="text-[#428CD4] mb-1">Requested Amount</Text>
+                        <Text className="text-ink-600 mb-1 font-semibold uppercase tracking-wider text-xs">Requested Amount</Text>
                         <div className="flex items-baseline gap-2 md:justify-end">
-                          <span className="text-4xl font-mono text-[#EAF1F8] drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">{req.amountUsd}</span>
+                          <span className="text-4xl font-mono text-ink-900 font-bold">{req.amountUsd}</span>
                         </div>
-                        <Text className="text-[#428CD4]/50 font-mono text-xs mt-1">{req.amountWei} WEI</Text>
+                        <Text className="text-ink-400 font-mono text-xs mt-1">{req.amountWei} WEI</Text>
                       </div>
 
                       <div className="flex gap-3 w-full md:w-auto">
@@ -229,14 +226,14 @@ export default function ApprovalsPage() {
                           variant="outline" 
                           onClick={() => handleReject(req.id)}
                           disabled={signingId !== null}
-                          className="flex-1 border-[#428CD4]/30 text-[#428CD4] bg-transparent hover:bg-[#428CD4]/10 hover:text-[#EAF1F8]"
+                          className="flex-1 border-border text-ink-600 bg-white hover:bg-slate-50 hover:text-ink-900"
                         >
                           <X className="w-4 h-4 mr-2" /> Reject
                         </Button>
                         <Button 
                           onClick={() => handleApprove(req.id)}
                           disabled={signingId !== null}
-                          className="flex-2 bg-[var(--grad-pink)] hover:opacity-90 text-white border-0 shadow-[0_0_15px_rgba(234,68,146,0.4)] hover:shadow-[0_0_25px_rgba(234,68,146,0.6)] transition-all font-display tracking-wide"
+                          className="flex-2 bg-blue-deep hover:bg-blue-deep/90 text-white border-0 shadow-sm transition-all font-display tracking-wide font-bold"
                         >
                           {signingId === req.id ? (
                             <span className="flex items-center"><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Signing...</span>

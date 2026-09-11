@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
-export const antiGravityReveal = {
+export const antiGravityReveal: any = {
   hidden: { opacity: 0, y: 40, scale: 0.97, filter: 'blur(4px)' },
   visible: { 
     opacity: 1, 
@@ -14,7 +14,7 @@ export const antiGravityReveal = {
   }
 };
 
-export const idleFloat = {
+export const idleFloat: any = {
   animate: {
     y: [0, -12, 0],
     transition: { repeat: Infinity, duration: 5, ease: "easeInOut" }

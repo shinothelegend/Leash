@@ -17,102 +17,55 @@ module.exports = {
     },
     extend: {
       colors: {
-        ink: "#041B2D",
-        "blue-deep": "#004E9A",
-        "blue-bright": "#428CD4",
-        "pink-soft": "#FF9CDA",
-        "pink-hot": "#EA4492",
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        bg: "var(--bg)",
+        surface: "var(--surface)",
+        "surface-raised": "var(--surface-raised)",
+        "ink-900": "var(--ink-900)",
+        "ink-600": "var(--ink-600)",
+        "ink-400": "var(--ink-400)",
+        "blue-deep": "var(--blue-deep)",
+        "blue-bright": "var(--blue-bright)",
+        "pink-soft": "var(--pink-soft)",
+        "pink-hot": "var(--pink-hot)",
+        border: "var(--border)",
+        
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "var(--blue-bright)",
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "var(--pink-hot)",
+          foreground: "#FFFFFF",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        // Tremor defaults
+        
+        // Tremor overrides for light theme
         tremor: {
           brand: {
-            faint: "#eff6ff", // blue-50
-            muted: "#bfdbfe", // blue-200
-            subtle: "#60a5fa", // blue-400
-            DEFAULT: "#3b82f6", // blue-500
-            emphasis: "#1d4ed8", // blue-700
-            inverted: "#ffffff", // white
+            faint: "#eff6ff",
+            muted: "#bfdbfe",
+            subtle: "var(--blue-bright)",
+            DEFAULT: "var(--blue-deep)",
+            emphasis: "#1e3a8a",
+            inverted: "#ffffff",
           },
           background: {
-            muted: "#f9fafb", // gray-50
-            subtle: "#f3f4f6", // gray-100
-            DEFAULT: "#ffffff", // white
-            emphasis: "#374151", // gray-700
+            muted: "#f9fafb",
+            subtle: "#f3f4f6",
+            DEFAULT: "#ffffff",
+            emphasis: "#374151",
           },
           border: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: "var(--border)",
           },
           ring: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: "var(--border)",
           },
           content: {
-            subtle: "#9ca3af", // gray-400
-            DEFAULT: "#6b7280", // gray-500
-            emphasis: "#374151", // gray-700
-            strong: "#111827", // gray-900
-            inverted: "#ffffff", // white
-          },
-        },
-        // dark mode for tremor
-        "dark-tremor": {
-          brand: {
-            faint: "#004E9A",
-            muted: "#004E9A",
-            subtle: "#428CD4",
-            DEFAULT: "#EA4492",
-            emphasis: "#FF9CDA",
-            inverted: "#041B2D",
-          },
-          background: {
-            muted: "#0A2740",
-            subtle: "#0D2E4A",
-            DEFAULT: "#041B2D",
-            emphasis: "#133D62",
-          },
-          border: {
-            DEFAULT: "#428CD4",
-          },
-          ring: {
-            DEFAULT: "#EA4492",
-          },
-          content: {
-            subtle: "#428CD4",
-            DEFAULT: "#EAF1F8",
-            emphasis: "#FFFFFF",
-            strong: "#FFFFFF",
-            inverted: "#041B2D",
+            subtle: "var(--ink-400)",
+            DEFAULT: "var(--ink-600)",
+            emphasis: "var(--ink-900)",
+            strong: "var(--ink-900)",
+            inverted: "#ffffff",
           },
         },
       },
@@ -123,20 +76,18 @@ module.exports = {
         "tremor-small": "0.375rem",
         "tremor-default": "0.5rem",
         "tremor-full": "9999px",
+        pill: "9999px",
       },
       boxShadow: {
         // Tremor box shadows
         "tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
         "tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
         "tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-        "dark-tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        "dark-tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-        "dark-tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
-        display: ["var(--font-heading-display)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
       },
       fontSize: {
         "tremor-label": ["0.75rem", { lineHeight: "1rem" }],
@@ -161,18 +112,6 @@ module.exports = {
       pattern:
         /^(border-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
       variants: ["hover", "ui-selected"],
-    },
-    {
-      pattern:
-        /^(ring-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-    },
-    {
-      pattern:
-        /^(stroke-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
-    },
-    {
-      pattern:
-        /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
     },
   ],
   plugins: [require("tailwindcss-animate")],

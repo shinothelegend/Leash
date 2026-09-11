@@ -1,20 +1,22 @@
 'use client';
 
-import { Card, Metric, Text, AreaChart, BadgeDelta, Flex, ProgressBar } from '@tremor/react';
+import { Card, Metric, Text, AreaChart, BadgeDelta, Flex } from '@tremor/react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { ArrowRight, Activity, ShieldCheck, Zap } from 'lucide-react';
 import { useReadContract, useReadContracts } from 'wagmi';
 import { POLICY_VAULT_ADDRESS, POLICY_VAULT_ABI } from '@/lib/contracts';
 import { AntiGravity, AntiGravityContainer } from '@/components/AntiGravity';
+import { Counter } from '@/components/Counter';
+import { motion } from 'framer-motion';
 
 const STATUS_MAP = ['Approved', 'Escalated', 'Rejected', 'Released'];
 
 const StatusBadge = ({ status }: { status: string }) => {
-  if (status === 'Approved' || status === 'Released') return <Badge className="bg-[#50F0C8]/10 text-[#50F0C8] border-[#50F0C8]/20 font-mono text-xs hover:bg-[#50F0C8]/20">{status}</Badge>;
-  if (status === 'Escalated') return <Badge className="bg-[#7C5CFF]/10 text-[#7C5CFF] border-[#7C5CFF]/20 font-mono text-xs hover:bg-[#7C5CFF]/20">Escalated</Badge>;
-  if (status === 'Rejected') return <Badge className="bg-red-500/10 text-red-400 font-mono text-xs hover:bg-red-500/20 border-red-500/20">Rejected</Badge>;
-  return <Badge className="font-mono text-xs">{status}</Badge>;
+  if (status === 'Approved' || status === 'Released') return <Badge className="bg-emerald-50 text-emerald-600 border-emerald-200 font-mono text-xs shadow-none">{status}</Badge>;
+  if (status === 'Escalated') return <Badge className="bg-amber-50 text-amber-600 border-amber-200 font-mono text-xs shadow-none">Escalated</Badge>;
+  if (status === 'Rejected') return <Badge className="bg-red-50 text-red-600 font-mono text-xs border-red-200 shadow-none">Rejected</Badge>;
+  return <Badge className="bg-slate-100 text-slate-600 border-slate-200 font-mono text-xs shadow-none">{status}</Badge>;
 };
 
 export default function DashboardPage() {
@@ -72,7 +74,7 @@ export default function DashboardPage() {
   const recentActivity = allRecent.slice(0, 5);
   const chartData = [...allRecent].reverse();
 
-  const cardStyle = "bg-[#111116] border-zinc-800/80 ring-0 shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:border-[#7C5CFF]/30 transition-all duration-300 rounded-xl";
+  const cardStyle = "card flex flex-col justify-between";
 
   return (
     <AntiGravityContainer className="space-y-8 max-w-7xl mx-auto py-8">
@@ -80,17 +82,17 @@ export default function DashboardPage() {
       <AntiGravity delay={0}>
         <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-400 mb-3">
-              <Zap className="w-3.5 h-3.5 text-[#3DDCFF]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-border shadow-sm text-xs font-mono text-ink-600 mb-4">
+              <Zap className="w-3.5 h-3.5 text-blue-bright" />
               <span>x402 Spending Firewall Active</span>
             </div>
-            <h1 className="font-sans font-extrabold text-3xl md:text-5xl tracking-tight text-white">
-              Agent Capacity <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7C5CFF] to-[#3DDCFF]">Telemetry</span>
+            <h1 className="font-display font-bold text-3xl md:text-5xl tracking-tight text-ink-900">
+              Agent Capacity Telemetry
             </h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-[#50F0C8]">
-              <span className="w-2 h-2 rounded-full bg-[#50F0C8] animate-ping"></span>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-border shadow-sm text-xs font-mono text-emerald-600 font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 status-dot"></span>
               Hedera Testnet: Connected
             </span>
           </div>
@@ -101,45 +103,67 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <AntiGravity delay={0.1}>
           <Card className={cardStyle}>
-            <Text className="text-zinc-400 text-xs uppercase font-mono tracking-wider">Spent Today</Text>
-            <Metric className="text-white font-mono mt-2">${spentUsd.toFixed(2)}</Metric>
-            <Flex className="mt-4">
-              <Text className="text-zinc-400 text-xs font-mono truncate">{percentSpent.toFixed(1)}% of daily cap</Text>
-            </Flex>
-            <ProgressBar value={percentSpent} color="purple" className="mt-2 opacity-90" />
+            <Text className="text-ink-600 text-xs uppercase font-mono tracking-wider font-semibold">Spent Today</Text>
+            <Metric className="text-ink-900 font-display mt-2 font-bold text-4xl">
+              $<Counter to={spentUsd} formatter={(v) => v.toFixed(2)} />
+            </Metric>
+            <div className="mt-4 pt-4 border-t border-border">
+              <Flex className="mb-2">
+                <Text className="text-ink-600 text-xs font-mono truncate">{percentSpent.toFixed(1)}% of daily cap</Text>
+              </Flex>
+              {/* Replace ProgressBar with animated line */}
+              <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }} 
+                  animate={{ width: `${Math.min(percentSpent, 100)}%` }} 
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="h-full bg-blue-bright" 
+                />
+              </div>
+            </div>
           </Card>
         </AntiGravity>
         
         <AntiGravity delay={0.2}>
           <Card className={cardStyle}>
-            <Text className="text-zinc-400 text-xs uppercase font-mono tracking-wider">Daily Policy Cap</Text>
-            <Metric className="text-[#3DDCFF] font-mono mt-2">${capUsd.toFixed(2)}</Metric>
-            <Flex className="mt-4">
-              <Text className="text-zinc-400 text-xs font-mono truncate">Resets in 24h</Text>
-            </Flex>
+            <Text className="text-ink-600 text-xs uppercase font-mono tracking-wider font-semibold">Daily Policy Cap</Text>
+            <Metric className="text-blue-deep font-display mt-2 font-bold text-4xl">
+              $<Counter to={capUsd} formatter={(v) => v.toFixed(2)} />
+            </Metric>
+            <div className="mt-4 pt-4 border-t border-border">
+              <Flex>
+                <Text className="text-ink-600 text-xs font-mono truncate">Resets in 24h</Text>
+              </Flex>
+            </div>
           </Card>
         </AntiGravity>
         
         <AntiGravity delay={0.3}>
           <Card className={cardStyle}>
-            <Text className="text-zinc-400 text-xs uppercase font-mono tracking-wider">Total On-Chain Jobs</Text>
-            <Metric className="text-[#7C5CFF] font-mono mt-2">{count}</Metric>
-            <Flex className="mt-4">
-              <BadgeDelta deltaType="increase" size="xs" className="bg-[#7C5CFF]/15 text-[#7C5CFF] font-mono">x402 Verified</BadgeDelta>
-            </Flex>
+            <Text className="text-ink-600 text-xs uppercase font-mono tracking-wider font-semibold">Total On-Chain Jobs</Text>
+            <Metric className="text-ink-900 font-display mt-2 font-bold text-4xl">
+              <Counter to={count} />
+            </Metric>
+            <div className="mt-4 pt-4 border-t border-border">
+              <Flex>
+                <BadgeDelta deltaType="increase" size="xs" className="bg-blue-50 text-blue-deep font-mono border border-blue-100 shadow-none rounded">x402 Verified</BadgeDelta>
+              </Flex>
+            </div>
           </Card>
         </AntiGravity>
         
         <AntiGravity delay={0.4}>
-          <Card className={cardStyle}>
-            <Text className="text-zinc-400 text-xs uppercase font-mono tracking-wider">Firewall Status</Text>
-            <div className="flex items-center gap-2 mt-3">
-              <ShieldCheck className="w-7 h-7 text-[#50F0C8] drop-shadow-[0_0_8px_rgba(80,240,200,0.6)]" />
-              <Metric className="text-white text-2xl font-mono">ENFORCING</Metric>
+          <Card className={`${cardStyle} bg-blue-deep !border-blue-900`}>
+            <Text className="text-blue-100 text-xs uppercase font-mono tracking-wider font-semibold">Firewall Status</Text>
+            <div className="flex items-center gap-3 mt-4">
+              <ShieldCheck className="w-8 h-8 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]" />
+              <Metric className="text-white text-3xl font-display font-bold">ENFORCING</Metric>
             </div>
-            <Flex className="mt-4">
-              <Text className="text-zinc-500 text-xs font-mono">Ledger DMK Ready</Text>
-            </Flex>
+            <div className="mt-4 pt-4 border-t border-blue-800">
+              <Flex>
+                <Text className="text-blue-200 text-xs font-mono">Ledger DMK Ready</Text>
+              </Flex>
+            </div>
           </Card>
         </AntiGravity>
       </div>
@@ -147,9 +171,9 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column (Charts) */}
         <AntiGravity delay={0.5} className="lg:col-span-2 h-full">
-          <Card className={`${cardStyle} h-full min-h-[380px] flex flex-col`}>
+          <Card className={`${cardStyle} h-full min-h-[380px]`}>
             <div className="mb-4">
-              <Text className="text-zinc-200 text-base font-semibold tracking-tight">Recent Settlement Volume ($USD over x402)</Text>
+              <Text className="text-ink-900 text-lg font-bold font-display tracking-tight">Recent Settlement Volume ($USD over x402)</Text>
             </div>
             
             {chartData.length > 0 ? (
@@ -158,14 +182,14 @@ export default function DashboardPage() {
                 data={chartData}
                 index="timeLabel"
                 categories={["amountRaw"]}
-                colors={["purple"]}
+                colors={["blue"]}
                 valueFormatter={(number) => `$${number.toFixed(2)}`}
                 showLegend={false}
               />
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center">
-                <Activity className="w-10 h-10 text-zinc-700 mb-3" />
-                <Text className="text-zinc-500 text-sm font-mono">Waiting for on-chain telemetry data...</Text>
+                <Activity className="w-10 h-10 text-slate-300 mb-3" />
+                <Text className="text-ink-400 text-sm font-mono">Waiting for on-chain telemetry data...</Text>
               </div>
             )}
           </Card>
@@ -173,28 +197,34 @@ export default function DashboardPage() {
 
         {/* Right Column (Activity) */}
         <AntiGravity delay={0.6} className="lg:col-span-1 h-full">
-          <Card className={`${cardStyle} h-full flex flex-col`}>
-            <div className="flex justify-between items-center mb-5">
-              <Text className="text-zinc-200 text-base font-semibold tracking-tight">Recent Settlements</Text>
-              <Link href="/payments" className="text-[#3DDCFF] hover:text-[#7C5CFF] text-xs font-mono flex items-center transition-colors">
+          <Card className={`${cardStyle} h-full`}>
+            <div className="flex justify-between items-center mb-5 border-b border-border pb-4">
+              <Text className="text-ink-900 text-lg font-bold font-display tracking-tight">Recent Settlements</Text>
+              <Link href="/payments" className="text-blue-bright hover:text-blue-deep text-xs font-mono flex items-center transition-colors">
                 View all <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Link>
             </div>
             
             <div className="flex-1 space-y-3">
               {recentActivity.length === 0 ? (
-                 <div className="text-center py-10 text-zinc-600 text-xs font-mono">No recent x402 settlements</div>
-              ) : recentActivity.map((tx: any) => (
-                <div key={tx.id} className="flex justify-between items-center p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-800/60 hover:border-[#7C5CFF]/40 transition-colors">
+                 <div className="text-center py-10 text-ink-400 text-xs font-mono">No recent x402 settlements</div>
+              ) : recentActivity.map((tx: {id: string, vendor: string, amount: string, timestamp: number, status: string}, idx: number) => (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 + (idx * 0.1), ease: "easeOut" }}
+                  key={tx.id} 
+                  className="flex justify-between items-center p-3.5 rounded-lg bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-sm hover:border-slate-200 transition-all cursor-pointer"
+                >
                   <div className="flex flex-col gap-0.5">
-                    <span className="font-mono text-xs text-zinc-200">{tx.vendor}</span>
-                    <span className="text-[10px] font-mono text-zinc-500">{new Date(tx.timestamp).toLocaleTimeString()}</span>
+                    <span className="font-mono text-sm text-ink-900 font-semibold">{tx.vendor}</span>
+                    <span className="text-[10px] font-mono text-ink-400">{new Date(tx.timestamp).toLocaleTimeString()}</span>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="font-mono text-xs font-semibold text-[#3DDCFF]">{tx.amount}</span>
+                  <div className="flex flex-col items-end gap-1.5">
+                    <span className="font-mono text-sm font-bold text-blue-deep">{tx.amount}</span>
                     <StatusBadge status={tx.status} />
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </Card>

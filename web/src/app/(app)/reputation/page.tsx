@@ -10,8 +10,8 @@ import { Activity } from 'lucide-react';
 import { AntiGravity, AntiGravityContainer } from '@/components/AntiGravity';
 
 export default function ReputationPage() {
-  const getReputationColor = (score: number) => {
-    if (score >= 90) return 'brand'; // Will map to our pink-hot via dark-tremor
+  const getReputationColor = (score: number): any => {
+    if (score >= 90) return 'fuchsia'; // Will map to our pink-hot via dark-tremor
     if (score >= 70) return 'blue';
     return 'red';
   };
@@ -90,7 +90,7 @@ export default function ReputationPage() {
                 data={vendorStats.slice(0, 5)}
                 index="name"
                 categories={["Reputation Score"]}
-                colors={["brand"]}
+                colors={["blue" as any]}
                 showAnimation={true}
                 yAxisWidth={30}
               />

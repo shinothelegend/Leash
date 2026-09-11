@@ -42,49 +42,52 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#0A0A0F] text-zinc-100 font-sans">
-      {/* Sidebar */}
-      <aside className="w-64 flex-shrink-0 border-r border-zinc-800 bg-[#0A0A0F]/50 hidden md:flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b border-zinc-800">
-          <Shield className="w-6 h-6 mr-2 text-indigo-500" />
-          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-violet-500 to-blue-500 tracking-tight">
+    <div className="flex min-h-screen bg-bg text-ink-900 font-body">
+      {/* Sidebar - Dark Accent Surface */}
+      <aside className="w-64 flex-shrink-0 border-r border-border bg-[#0B1220] hidden md:flex flex-col relative overflow-hidden">
+        {/* Subtle glow in sidebar */}
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-900/20 to-transparent pointer-events-none"></div>
+
+        <div className="h-16 flex items-center px-6 border-b border-white/10 relative z-10">
+          <Shield className="w-6 h-6 mr-2 text-blue-bright" />
+          <span className="text-xl font-bold font-display text-white tracking-tight">
             Leash
           </span>
         </div>
         
-        <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto relative z-10">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                className={`flex items-center px-4 py-3 text-sm font-medium rounded-pill transition-all duration-300 ${
                   isActive 
-                    ? 'bg-gradient-to-r from-indigo-500/10 to-transparent text-indigo-400 border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.1)]' 
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                    ? 'bg-white/10 text-white font-semibold border border-white/5 shadow-[0_2px_10px_rgba(0,0,0,0.1)]' 
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <item.icon className={`w-5 h-5 mr-3 ${isActive ? 'text-indigo-500' : 'text-zinc-500'}`} />
+                <item.icon className={`w-5 h-5 mr-3 transition-colors ${isActive ? 'text-blue-bright' : 'text-slate-500'}`} />
                 {item.name}
               </Link>
             );
           })}
         </nav>
         
-        <div className="p-4 border-t border-zinc-800">
-          <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-3 flex flex-col gap-2">
-            <span className="text-xs text-zinc-500 font-medium uppercase tracking-wider">Network</span>
+        <div className="p-4 border-t border-white/10 relative z-10">
+          <div className="bg-[#131B2C] border border-white/5 rounded-lg p-3.5 flex flex-col gap-2 shadow-inner">
+            <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Network</span>
             <div className="flex items-center">
               <div className="w-2 h-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-              <span className="text-sm font-medium">Hedera Testnet</span>
+              <span className="text-sm font-medium text-slate-200">Hedera Testnet</span>
             </div>
             
             {address && (
               <>
-                <div className="h-px bg-zinc-800 my-1"></div>
-                <span className="text-xs text-zinc-500 font-medium uppercase tracking-wider">Wallet</span>
-                <span className="text-xs font-mono bg-zinc-950 px-2 py-1 rounded text-zinc-300 truncate">
+                <div className="h-px bg-white/5 my-1"></div>
+                <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Wallet</span>
+                <span className="text-xs font-mono bg-black/40 px-2 py-1.5 rounded text-blue-300 truncate border border-white/5">
                   {address}
                 </span>
               </>
@@ -94,18 +97,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 border-b border-zinc-800 bg-[#0A0A0F]/80 backdrop-blur-sm sticky top-0 z-30 flex items-center justify-between px-8">
-          <h1 className="text-lg font-semibold capitalize text-zinc-100">
+      <main className="flex-1 flex flex-col min-w-0 bg-bg relative">
+        <header className="h-16 border-b border-border bg-white/60 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-8 shadow-sm">
+          <h1 className="text-xl font-bold capitalize font-display text-ink-900 tracking-tight">
             {pathname.replace('/', '') || 'Dashboard'}
           </h1>
           <div className="flex items-center gap-4">
-            <button className="text-zinc-400 hover:text-zinc-100 transition-colors">
+            <button className="text-ink-400 hover:text-ink-900 transition-colors">
               <Bell className="w-5 h-5" />
             </button>
             <Button
               variant={address ? "outline" : "default"}
-              className={address ? "border-zinc-700 bg-zinc-900 text-zinc-300" : "bg-gradient-to-r from-indigo-500 via-violet-500 to-blue-500 text-white border-0 hover:opacity-90"}
+              className={address ? "border-border bg-white text-ink-900 hover:bg-slate-50 rounded-pill shadow-sm" : "bg-ink-900 text-white font-medium border-0 hover:bg-ink-900/90 rounded-pill shadow-soft"}
               onClick={connectWallet}
             >
               {address ? `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` : 'Connect Wallet'}
@@ -114,7 +117,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </header>
         
         <div className="p-8 flex-1 overflow-y-auto relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
           {children}
         </div>
       </main>
