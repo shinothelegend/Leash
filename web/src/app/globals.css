@@ -4,56 +4,53 @@
 
 @layer base {
   :root {
-    --ink: #041B2D;
-    --blue-deep: #004E9A;
-    --blue-bright: #428CD4;
-    --pink-soft: #FF9CDA;
-    --pink-hot: #EA4492;
-    --grad-blue: linear-gradient(160deg, #041B2D 0%, #004E9A 60%, #428CD4 100%);
-    --grad-pink: linear-gradient(160deg, #EA4492 0%, #FF9CDA 100%);
+    --ink: #070709;
+    --xorv-purple: #7C5CFF;
+    --xorv-cyan: #3DDCFF;
+    --xorv-mint: #50F0C8;
     
-    --background: 206 84% 10%; /* #041B2D */
-    --foreground: 211 50% 94%; /* #EAF1F8 */
-    --card: 208 73% 15%; /* #0A2740 */
-    --card-foreground: 211 50% 94%;
-    --popover: 208 73% 15%;
-    --popover-foreground: 211 50% 94%;
-    --primary: 332 79% 59%; /* #EA4492 */
+    --background: 240 10% 4%; /* #070709 */
+    --foreground: 210 20% 98%; /* #F8FAFC */
+    --card: 240 8% 7%; /* #111116 */
+    --card-foreground: 210 20% 98%;
+    --popover: 240 8% 7%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 252 100% 68%; /* #7C5CFF */
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 100% 30%; /* #004E9A */
-    --secondary-foreground: 211 50% 94%;
-    --muted: 209 68% 17%; /* #0D2E4A */
-    --muted-foreground: 212 50% 70%;
-    --accent: 332 79% 59%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62% 30%;
+    --secondary: 191 100% 62%; /* #3DDCFF */
+    --secondary-foreground: 240 10% 4%;
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 165 84% 63%; /* #50F0C8 */
+    --accent-foreground: 240 10% 4%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 211 63% 54%; /* #428CD4 */
-    --input: 211 63% 54%;
-    --ring: 211 63% 54%;
-    --radius: 1rem;
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 252 100% 68%;
+    --radius: 0.75rem;
   }
   
   .dark {
-    --background: 206 84% 10%; /* #041B2D */
-    --foreground: 211 50% 94%; /* #EAF1F8 */
-    --card: 208 73% 15%; /* #0A2740 */
-    --card-foreground: 211 50% 94%;
-    --popover: 208 73% 15%;
-    --popover-foreground: 211 50% 94%;
-    --primary: 332 79% 59%; /* #EA4492 */
+    --background: 240 10% 4%;
+    --foreground: 210 20% 98%;
+    --card: 240 8% 7%;
+    --card-foreground: 210 20% 98%;
+    --popover: 240 8% 7%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 252 100% 68%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 100% 30%; /* #004E9A */
-    --secondary-foreground: 211 50% 94%;
-    --muted: 209 68% 17%; /* #0D2E4A */
-    --muted-foreground: 212 50% 70%;
-    --accent: 332 79% 59%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62% 30%;
+    --secondary: 191 100% 62%;
+    --secondary-foreground: 240 10% 4%;
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 165 84% 63%;
+    --accent-foreground: 240 10% 4%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 211 63% 54%; /* #428CD4 */
-    --input: 211 63% 54%;
-    --ring: 211 63% 54%;
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 252 100% 68%;
   }
 
   * {
@@ -71,13 +68,19 @@
     top: 0; left: 0; width: 100vw; height: 100vh;
     pointer-events: none;
     z-index: 50;
-    opacity: 0.03;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 }
 
 @layer utilities {
   .text-shadow-glow {
-    text-shadow: 0 0 15px rgba(234, 68, 146, 0.4);
+    text-shadow: 0 0 20px rgba(124, 92, 255, 0.5);
+  }
+  .text-shadow-cyan {
+    text-shadow: 0 0 20px rgba(61, 220, 255, 0.5);
+  }
+  .border-glow {
+    box-shadow: 0 0 15px rgba(124, 92, 255, 0.15);
   }
 }
