@@ -5,9 +5,9 @@
 @layer base {
   :root {
     --ink: #070709;
-    --xorv-purple: #7C5CFF;
-    --xorv-cyan: #3DDCFF;
-    --xorv-mint: #50F0C8;
+    --leash-primary: #7C5CFF;
+    --leash-cyan: #3DDCFF;
+    --leash-mint: #50F0C8;
     
     --background: 240 10% 4%; /* #070709 */
     --foreground: 210 20% 98%; /* #F8FAFC */
