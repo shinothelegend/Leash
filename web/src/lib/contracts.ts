@@ -1,4 +1,4 @@
-export const POLICY_VAULT_ADDRESS = '0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC';
+export const POLICY_VAULT_ADDRESS = '0xD5BBD98D03Fa1B1DdD2D944E251cbE02F5eedcdC' as `0x${string}`;
 export const POLICY_VAULT_ABI = [
   {
     "inputs": [

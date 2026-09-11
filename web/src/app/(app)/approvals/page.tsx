@@ -50,7 +50,7 @@ export default function ApprovalsPage() {
 
   const allPayments = paymentsData?.map((result, i) => {
     if (result.status === 'success' && result.result) {
-      const [vendor, amountWei, amountUsdCents, status, timestamp, resource] = result.result as [string, bigint, bigint, number, bigint, string];
+      const [vendor, amountWei, amountUsdCents, status, timestamp, resource] = result.result as unknown as [string, bigint, bigint, number, bigint, string];
       return {
         id: paymentIndices[i].toString(),
         vendor,

@@ -42,7 +42,7 @@ export default function ReputationPage() {
     if (paymentsData) {
       paymentsData.forEach((result) => {
         if (result.status === 'success' && result.result) {
-          const [vendor, , , status] = result.result as [string, bigint, bigint, number, bigint, string];
+          const [vendor, , , status] = result.result as unknown as [string, bigint, bigint, number, bigint, string];
           if (!stats[vendor]) {
             stats[vendor] = { approved: 0, escalated: 0, rejected: 0, released: 0 };
           }

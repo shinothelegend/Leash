@@ -57,7 +57,7 @@ export default function DashboardPage() {
 
   const recentActivity = recentPaymentsData?.map((result, i) => {
     if (result.status === 'success' && result.result) {
-      const [vendor, amountWei, amountUsdCents, status, timestamp, resource] = result.result as [string, bigint, bigint, number, bigint, string];
+      const [vendor, amountWei, amountUsdCents, status, timestamp, resource] = result.result as unknown as [string, bigint, bigint, number, bigint, string];
       return {
         id: paymentIndices[i].toString(),
         vendor: `${vendor.slice(0,6)}...${vendor.slice(-4)}`,
